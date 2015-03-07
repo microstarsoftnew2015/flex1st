@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
+    <fx:Script><![CDATA[
+        import mx.controls.Alert;
+        import mx.rpc.events.ResultEvent;
+        import mx.rpc.soap.WebService;
+
+        private function btnSay(event:MouseEvent):void {
+             var ws :mx.rpc.soap.WebService = new mx.rpc.soap.WebService();
+             ws.wsdl= "http://localhost:45358/Service1.asmx?wsdl";
+               ws.addEventListener(ResultEvent.RESULT,resultFunction);//增加返回结果的监听
+                ws.getOperation("HelloWorld").send();
+                ws.loadWSDL();
+        }
+
+        private function resultFunction(event:ResultEvent):void {
+            var s:String =event.result as String;
+            Alert.show(s.toString());
+        }
+
+
+        ]]></fx:Script>
+    <s:VGroup>
+        <s:Button click="btnSay(event)" label="Say Hello1"/>
+    </s:VGroup>
+</s:Application>
